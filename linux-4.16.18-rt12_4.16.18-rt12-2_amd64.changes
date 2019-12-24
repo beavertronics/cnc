@@ -1,0 +1,43 @@
+Format: 1.8
+Date: Sat, 21 Dec 2019 11:39:20 -0800
+Source: linux-4.16.18-rt12
+Binary: linux-image-4.16.18-rt12 linux-headers-4.16.18-rt12 linux-libc-dev linux-image-4.16.18-rt12-dbg
+Architecture: source amd64
+Version: 4.16.18-rt12-2
+Distribution: xenial
+Urgency: low
+Maintainer: Anonymous <root@art>
+Changed-By: Anonymous <root@art>
+Description:
+ linux-headers-4.16.18-rt12 - Linux kernel headers for 4.16.18-rt12 on ${kernel:debarch}
+ linux-image-4.16.18-rt12 - Linux kernel, version 4.16.18-rt12
+ linux-image-4.16.18-rt12-dbg - Linux kernel debugging symbols for 4.16.18-rt12
+ linux-libc-dev - Linux support headers for userspace development
+Changes:
+ linux-4.16.18-rt12 (4.16.18-rt12-2) xenial; urgency=low
+ .
+   * Custom built Linux kernel.
+Checksums-Sha1:
+ 443248bbbc6913a6827ec6a142e13b3fa0d19e02 1166 linux-4.16.18-rt12_4.16.18-rt12-2.dsc
+ c9470374a150ce7f050a7c119e3b03bce5eff184 165072370 linux-4.16.18-rt12_4.16.18-rt12.orig.tar.gz
+ 649cb87bee1a4d73e31bf4eaf53efcdae9b8b355 1288 linux-4.16.18-rt12_4.16.18-rt12-2.debian.tar.gz
+ 156a845393285ddff03837905c609598ee052bee 11162168 linux-headers-4.16.18-rt12_4.16.18-rt12-2_amd64.deb
+ 4a35b748ae3cdbcfb864b026288ca52be5bf0eff 589770578 linux-image-4.16.18-rt12-dbg_4.16.18-rt12-2_amd64.deb
+ b961cd19caf9b13938a10a769c440628d947176f 53212730 linux-image-4.16.18-rt12_4.16.18-rt12-2_amd64.deb
+ 00d5e3b5540e5027af33bbe29e2ced8bb6dda6c9 988646 linux-libc-dev_4.16.18-rt12-2_amd64.deb
+Checksums-Sha256:
+ 745bf07823373d29f901d6794bc59fab847f03654465e70312dabdd5a25b640f 1166 linux-4.16.18-rt12_4.16.18-rt12-2.dsc
+ 83ca69c765a65afcb388b95e02041a8ec9db5ff6b946ffe78e7177fc629010db 165072370 linux-4.16.18-rt12_4.16.18-rt12.orig.tar.gz
+ 14f45c02409b62393eead2da822888c546726a9cc19abed4673056d928d9293a 1288 linux-4.16.18-rt12_4.16.18-rt12-2.debian.tar.gz
+ d48d3738f43d3981e4de6c4728fbe94a68318e26d8fe6dbfbf099b92a52c3024 11162168 linux-headers-4.16.18-rt12_4.16.18-rt12-2_amd64.deb
+ 8b8e3bde754b52d8a3f535ea9d493b1d6b44eff09934ea356a149fbf329483f1 589770578 linux-image-4.16.18-rt12-dbg_4.16.18-rt12-2_amd64.deb
+ c74f0c5dc5b3c27cf8bac99a3440634ebdacbee873ed89645898bf5e34706b14 53212730 linux-image-4.16.18-rt12_4.16.18-rt12-2_amd64.deb
+ 2760c8fe75639aa90a46015f95633917419f311b11d23be418198566e21bbc48 988646 linux-libc-dev_4.16.18-rt12-2_amd64.deb
+Files:
+ 460d8704639a785708f70de398660e38 1166 kernel optional linux-4.16.18-rt12_4.16.18-rt12-2.dsc
+ 5038b54b55cdbb66d29f6b54cc7e61d3 165072370 kernel optional linux-4.16.18-rt12_4.16.18-rt12.orig.tar.gz
+ edaa8d32adb36daa2cd3032d63478d4f 1288 kernel optional linux-4.16.18-rt12_4.16.18-rt12-2.debian.tar.gz
+ c48bb61fc3697b9515d05773ece49f67 11162168 kernel optional linux-headers-4.16.18-rt12_4.16.18-rt12-2_amd64.deb
+ 7799deac4070db463589a9f97a94a4f2 589770578 debug optional linux-image-4.16.18-rt12-dbg_4.16.18-rt12-2_amd64.deb
+ b855bfa8586a54a7019f3337b612f46f 53212730 kernel optional linux-image-4.16.18-rt12_4.16.18-rt12-2_amd64.deb
+ 520a079aaa3ea4f98347f426e501002f 988646 devel optional linux-libc-dev_4.16.18-rt12-2_amd64.deb

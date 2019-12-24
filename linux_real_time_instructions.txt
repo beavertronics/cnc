@@ -1,0 +1,154 @@
+
+stackoverflow.com
+
+Install RT Linux patch for Ubuntu
+Abhay Nayak (modified for Beavertronics 5970 - dmi)
+
+Step 0 - Make a working directory
+
+Make a working directory
+
+#Move to working directory
+mkdir ~/kernel && cd ~/kernel
+
+Step 1 - Download kernel and patch
+
+Go to https://www.kernel.org/pub/linux/kernel/ and download a desired version of kernel to ~/kernel. Similarly, go to https://www.kernel.org/pub/linux/kernel/projects/rt/ and download the RT patch with same version as the downloaded kernel version. The kernel and patch I used were linux-4.16.18.tar.gz and patch-4.16.18-rt12.patch.gz.
+
+Step 2 - Unzip the kernel
+
+tar -xzvf linux-4.16.18.tar.gz
+
+Step 3 - Patch the kernel
+
+#Move to kernel source directory
+cd linux-4.16.18
+gzip -cd ../patch-4.16.18-rt12.patch.gz | patch -p1 --verbose
+
+Step 4 - Enable realtime processing This step requires libncurses-dev
+
+sudo apt-get install libncurses-dev libssl-dev bison flex
+
+The next command launches a graphical menu in the terminal to generate the config file.
+
+make menuconfig
+
+Go to the location and make the changes accordingly
+
+##Graphical Menu##
+
+Processor type and features ---> [Enter]
+Preemption Model (Voluntary Kernel Preemption (Desktop)) [Enter]
+Fully Preemptible Kernel (RT) [Enter] #Select
+
+[Esc][Esc]
+
+Kernel hacking --> [Enter]
+Memory Debugging [Enter]
+Check for stack overflows # Probably deselected. Make sure it is deselected.
+
+
+[Esc][Esc]
+
+
+[Right Arrow][Right Arrow]
+
+<Save> [Enter]
+
+.config
+
+<Okay> [Enter]
+
+<Exit> [Enter]
+
+
+[Esc][Esc]
+
+
+[Right Arrow]
+<Exit> [Enter]
+
+Step 5 - Compile the kernel and make source and binary kernel packages
+
+make deb-pkg -j8 # With 4 cores and -j 8 it took about an hour
+
+Step 6
+
+# If you want to install this kernel elsewhere copy the .deb files made from the
+# 'make' above to the other computer.  Go to the directory to which the .deb files
+# were copied. Now run the following:
+
+sudo apt install ./linux-image-4.16.18-rt12_4.16.18-rt12-2_amd64.deb
+sudo apt install ./linux-headers-4.16.18-rt12_4.16.18-rt12-2_amd64.deb
+
+# The libc-dev package was made by "make deb-pkg" - I'm not sure why
+# should it need to be installed, it exists on this thumb drive, and
+# can be installed this way:
+
+sudo apt install ./linux-libc-dev_4.16.18-rt12-2_amd64.deb
+
+# A debugging version of the kernel was also created by "make deb-pkg". It
+# might be needed to analyze a problem if the kernel proves unstable.
+# It may be installed this way:
+
+sudo apt install ./linux-image-4.16.18-rt12-dbg_4.16.18-rt12-2_amd64.deb
+
+# Once the kernel has been installed, we need to reboot to have it
+# be the new one.
+
+sudo reboot
+
+=================
+
+# OR,
+#
+# If you use 'make all -j8' rather than 'make deb-pkg -j8' above then you can install
+# the kernel without package management this way:
+sudo make modules_install -j8
+sudo make install -j8
+
+Step 6 - Verify and update Verify that initrd.img-4.16.18-rt12, vmlinuz-4.16.18-rt12, and config-4.16.18-rt12 are generated in /boot directory and update the grub.
+
+cd /boot
+ls
+sudo update-grub
+
+Verify that there is a menuentry containing the text "menuentry 'Ubuntu, with Linux 4.16.18-rt12'" in /boot/grub/grub.cfg file
+
+To change default kernel in grub, edit the GRUB_DEFAULT value in /etc/default/grub to your desired kernel.
+
+NOTE: 0 is the 1st menuentry
+
+7 - Reboot and verify
+
+sudo reboot
+
+Once the system reboots, open the terminal and use uname -a to check the kernel version, it should look something like the following:
+
+Linux your_computer_name 4.16.18-rt12 #1 SMP PREEMPT RT Mon May 13 03:32:57 EDT 2019 x86_64 x86_64 x86_64 GNU/Linux
+
+Note: "SMP PREEMPT RT" validates that your system is running real time kernel.
+
+============
+
+
+After installing the new kernel (like @Abhay Nayak posted), I got into a kernel panic. The problem was that the initrd image was too big. I solved that with:
+
+Step 1 - Strip the kernel modules
+
+cd /lib/modules/<new_kernel>
+find . -name *.ko -exec strip --strip-unneeded {} +
+
+Step 2 - Change the initramfs compression
+
+Edit file /etc/initramfs-tools/initramfs.conf:
+
+COMPRESS=xz
+
+Step 3 - Update initramfs
+
+sudo update-initramfs -u
+sudo update-grub2
+
+
+
